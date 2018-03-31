@@ -8,16 +8,54 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 import { Layout, Header,Navigation,Drawer,Content,Button,IconButton} from 'react-mdl';
 import { Card, CardTitle, CardText,CardActions,CardMenu} from 'react-mdl';
+import { GoogleLogin } from 'react-google-login-component';
+import { FacebookLogin } from 'react-facebook-login-component';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor (props, context) {
+    super(props, context);
+  }
 
-    }
+  responseFacebook (response) {
+    console.log(response);
+    //anything else you want to do(save to localStorage)...
+  }
+
+  responseGoogle (googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    var googleId = googleUser.getId();
+
+    console.log({ googleId });
+    console.log({accessToken: id_token});
+    //anything else you want to do(save to localStorage)...
+  }
+
 
   render(){
     return (
+
       <div className="demo-big-content">
+        <div>
+
+          <GoogleLogin socialId="828963725968-h31q0lthpf9q1utst98rk8glollmkntc.apps.googleusercontent.com"
+            className="google-login"
+            scope="profile"
+            fetchBasicProfile={false}
+            responseHandler={this.responseGoogle}
+            buttonText="Login With Google"/>
+
+          <FacebookLogin socialId="190915771521014"
+            language="en_US"
+            scope="public_profile,email"
+            responseHandler={this.responseFacebook}
+            xfbml={true}
+            fields="id,email,name"
+            version="v2.5"
+            className="facebook-login"
+            buttonText="Login With Facebook"/>
+
+        </div>
+
 
       <Layout>
         {/* Barra Principal de la Ventana */}
@@ -112,10 +150,13 @@ class App extends React.Component {
         </Content>
     </Layout>
 </div>
+
     );
 
   }
 }
+
+export default App;
 
 ReactDOM.render(
   <App/>,

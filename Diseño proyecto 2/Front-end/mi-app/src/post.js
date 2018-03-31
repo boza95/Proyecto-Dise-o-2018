@@ -23,7 +23,7 @@ export default class PersonList extends React.Component {
     console.log("User Before ")
     console.log(Usuario);
 
-    axios.post(`http://localhost:49490/Home/GetData`, { Usuario })
+    axios.post(`http://localhost:3000/Home/GetData`, { Usuario })
       .then(res => {
         console.log(res);
         console.log("User After ");
