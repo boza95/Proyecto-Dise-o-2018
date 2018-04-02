@@ -8,8 +8,10 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 import { Layout, Header,Navigation,Drawer,Content,Button,IconButton} from 'react-mdl';
 import { Card, CardTitle, CardText,CardActions,CardMenu} from 'react-mdl';
-import { GoogleLogin } from 'react-google-login-component';
+//import { GoogleLogin } from 'react-google-login-component';
 import { FacebookLogin } from 'react-facebook-login-component';
+import { GoogleLogin } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 
 class App extends React.Component {
   constructor (props, context) {
@@ -21,28 +23,42 @@ class App extends React.Component {
     //anything else you want to do(save to localStorage)...
   }
 
-  responseGoogle (googleUser) {
+  /*responseGoogle (googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
     var googleId = googleUser.getId();
 
     console.log({ googleId });
     console.log({accessToken: id_token});
     //anything else you want to do(save to localStorage)...
+  }*/
+
+  responseGoogle = (response) => {
+    console.log(response);
   }
 
+  logoutGoogle = () => {
+    console.log('logout');
+  }
+
+  //var React = require('react');
+  //var FontAwesome = require('react-fontawesome');
 
   render(){
     return (
 
       <div className="demo-big-content">
         <div>
+          <GoogleLogin
+            clientId="828963725968-h31q0lthpf9q1utst98rk8glollmkntc.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+          />
 
-          <GoogleLogin socialId="828963725968-h31q0lthpf9q1utst98rk8glollmkntc.apps.googleusercontent.com"
-            className="google-login"
-            scope="profile"
-            fetchBasicProfile={false}
-            responseHandler={this.responseGoogle}
-            buttonText="Login With Google"/>
+          <GoogleLogout
+            buttonText="Logout"
+            onLogoutSuccess={this.logoutGoogle}
+          />
 
           <FacebookLogin socialId="190915771521014"
             language="en_US"
@@ -53,8 +69,7 @@ class App extends React.Component {
             version="v2.5"
             className="facebook-login"
             buttonText="Login With Facebook"/>
-
-        </div>
+          </div>
 
 
       <Layout>
@@ -152,7 +167,6 @@ class App extends React.Component {
 </div>
 
     );
-
   }
 }
 
